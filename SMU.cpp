@@ -124,11 +124,8 @@ void SessionItem::onAttached(Device *device)
 }
 
 void SessionItem::onDetached(Device* device){
-    if (m_active) {
-            this->cancel();
-    }
-    // wait for completion
-    m_session->end();
+    // wait for transfers to fail on their own, wait for the finished handler to complete - subsequent calls do nothing if m_devices is empty, like is done below
+    this->onFinished();
     m_session->remove_device(device);
     if ((int) m_session->m_devices.size() < m_devices.size()) {
         for (auto dev: m_devices) {
@@ -150,7 +147,7 @@ void SessionItem::onFinished()
     m_session->end();
     m_active = false;
     activeChanged();
-
+    qDebug() << "finished";
     for (auto dev: m_devices) {
         for (auto chan: dev->m_channels) {
             for (auto sig: chan->m_signals) {
