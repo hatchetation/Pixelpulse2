@@ -144,7 +144,7 @@ void SessionItem::cancel() {
 
 void SessionItem::onFinished()
 {
-    m_session->end();
+    //m_session->end();
     m_active = false;
     activeChanged();
     qDebug() << "finished";
