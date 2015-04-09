@@ -14,7 +14,7 @@ class FloatBuffer;
 
 class SessionItem : public QObject {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<DeviceItem> devices READ getDevices NOTIFY devicesChanged)
+    Q_PROPERTY(QQmlListProperty<DeviceItem> devices READ getDevices NOTIFY devicesChanged);
     Q_PROPERTY(bool active READ getActive NOTIFY activeChanged);
     Q_PROPERTY(unsigned sampleRate MEMBER m_sample_rate NOTIFY sampleRateChanged);
     Q_PROPERTY(unsigned sampleCount MEMBER m_sample_count NOTIFY sampleCountChanged);
@@ -28,10 +28,9 @@ public:
 
     Q_INVOKABLE void start(bool continuous);
     Q_INVOKABLE void cancel();
-    int getAvailableDevices() { return m_session->m_available_devices.size(); }
-
 
     bool getActive() { return m_active; }
+    int getAvailableDevices() { return m_session->m_available_devices.size(); }
     QQmlListProperty<DeviceItem> getDevices() { return QQmlListProperty<DeviceItem>(this, m_devices); }
 
 signals:
@@ -39,6 +38,7 @@ signals:
     void activeChanged();
     void sampleRateChanged();
     void sampleCountChanged();
+    void availableDevicesChanged();
     void progress(sample_t);
     void finished(unsigned status);
     void attached(Device* device);
